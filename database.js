@@ -17,9 +17,9 @@ module.exports = {
   getbookqueue,
   insertbookq,
   insertdate,
-  inserttime
+  inserttime,
   
-  // gethistoryii,
+  gethistory,
   // gethistoryiiByID,
   // getbookqueue,
   // getappointment,
@@ -115,7 +115,18 @@ function insertdate(req, res) {
     
     }
 
-  
+function gethistory(req, res) {
+  console.log(req.param.id);
+  connection.query(`SELECT * from history`, function (error, results, fields) {
+    if (error) throw error;
+    res.status(200)
+      .json({
+        status: 'success',
+        data: results,
+        message: 'Retrieved ALL history'
+      });
+  });
+}  
 
 
 
@@ -133,18 +144,7 @@ function insertdate(req, res) {
 //       });
 //   });
 // }
-// function gethistoryii(req, res) {
-//   console.log(req.param.id);
-//   connection.query(`SELECT * from historyii`, function (error, results, fields) {
-//     if (error) throw error;
-//     res.status(200)
-//       .json({
-//         status: 'success',
-//         data: results,
-//         message: 'Retrieved ALL history'
-//       });
-//   });
-// }
+
 // function gethistoryiiByID(req, res) {
 //   console.log(req.param.id);
 //   connection.query(`SELECT * from historyii where AID = ${req.params.id}`, function (error, results, fields) {

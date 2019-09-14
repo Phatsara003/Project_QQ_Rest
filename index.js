@@ -29,6 +29,7 @@ var output = {
 app.get('/customer',db.getAllData);
 app.get('/bookq',db.getbookqueue);
 app.get('/customer/:id',db.getAllDataByID);
+app.get('/history',db.gethistory);
 app.post('/bookq',db.insertbookq);
 app.post('/date',db.insertdate);
 app.post('/time',db.inserttime);
