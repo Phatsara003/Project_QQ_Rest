@@ -12,9 +12,6 @@ app.get('/', function (req, res) {
     res.send('Express is running');
 });
 
-
-
-
 // api
 app.get('/json', function (req, res) {
     res.status(200).json(output);
@@ -26,13 +23,19 @@ var output = {
 }
 
 // create table
+//get
 app.get('/customer',db.getAllData);
-app.get('/bookq',db.getbookqueue);
+app.get('/book',db.getbookqueue);
+app.get('/appoints',db.getappoints);
 app.get('/customer/:id',db.getAllDataByID);
+app.get('/bookq/:id',db.getbookqueueByID);
 app.get('/history',db.gethistory);
-app.post('/bookq',db.insertbookq);
+//post
+app.post('/book',db.insertbookq);
 app.post('/date',db.insertdate);
 app.post('/time',db.inserttime);
+//delete
+app.delete('/book/:id', db.deletequeue);
 
 
    
@@ -40,5 +43,5 @@ app.post('/time',db.inserttime);
 
 var port = process.env.PORT || 8080;
 app.listen(port, function () {
-    console.log('App is running on http://localhost:' + port);
+    console.log('App is running on http://172.19.131.212:' + port);
 });

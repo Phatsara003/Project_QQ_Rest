@@ -15,20 +15,22 @@ module.exports = {
   getAllData,
   getAllDataByID,
   getbookqueue,
+  getbookqueueByID,
+  gethistory,
+  getappoints,
   insertbookq,
   insertdate,
   inserttime,
-  
-  gethistory,
+  deletequeue,
   // gethistoryiiByID,
   // getbookqueue,
-  // getappointment,
+  // getappoins,
   // getbookqueueByID
 
 };
 
 
-
+//DataCustomer
 function getAllData(req, res) {
   connection.query("SELECT * from customer;", function (error, results, fields) {
     if (error) throw error;
@@ -54,8 +56,9 @@ function getAllDataByID(req, res) {
   });
 }
 
+//Bookqueue
 function getbookqueue(req, res) {
-  connection.query("SELECT * from bookq;", function (error, results, fields) {
+  connection.query("SELECT * from book ORDER BY start DESC ;", function (error, results, fields) {
     if (error) throw error;
     res.status(200)
       .json({
@@ -67,6 +70,20 @@ function getbookqueue(req, res) {
 }
 
 
+function getbookqueueByID(req, res) {
+  console.log(req.param.id);
+  connection.query(`SELECT * from book where CusID = ${req.params.id}`, function (error, results, fields) {
+    if (error) throw error;
+    res.status(200)
+      .json({
+        status: 'success',
+        data: results,
+        message: 'Retrieved ALL bookqueue :'+req.params.id
+      });
+  });
+}
+
+//insertBookqueue
 function insertbookq(req, res) {
 console.log(res);
 
@@ -75,7 +92,7 @@ console.log(req.query);
 res.send();
 
   //Insert a record in the "customers" table:
-  var sql = "INSERT INTO bookq  VALUES ("+req.query.BookID+",'"+req.query.Date+"','"+req.query.Time+"','"+req.query.Detail+"',"+req.query.Status+","+req.query.CusID+",'"+req.query.Type+"')";
+  var sql = "INSERT INTO book  VALUES ("+req.query.BookID+",'"+req.query.start+"','"+req.query.Time+"','"+req.query.Detail+"',"+req.query.Status+",'"+req.query.Type+"','"+req.query.end+"',"+req.query.CusID+")";
   connection.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
@@ -83,6 +100,7 @@ res.send();
 
 }
 
+//insertDate
 function insertdate(req, res) {
   console.log(res);
   
@@ -91,7 +109,7 @@ function insertdate(req, res) {
   res.send();
   
     
-    var sql = "INSERT INTO date VALUES ("+req.query.DetID+",'"+req.query.Date+"')";
+    var sql = "INSERT INTO date VALUES ("+req.query.DetID+",'"+req.query.start+"')";
     connection.query(sql, function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
@@ -99,6 +117,7 @@ function insertdate(req, res) {
   
   }
 
+  //insertTime
   function inserttime(req, res) {
     console.log(res);
     
@@ -115,9 +134,10 @@ function insertdate(req, res) {
     
     }
 
+//History
 function gethistory(req, res) {
   console.log(req.param.id);
-  connection.query(`SELECT * from history`, function (error, results, fields) {
+  connection.query(`SELECT * from history ORDER BY start DESC`, function (error, results, fields) {
     if (error) throw error;
     res.status(200)
       .json({
@@ -128,75 +148,36 @@ function gethistory(req, res) {
   });
 }  
 
+//appointments
+function getappoints(req, res) {
+  connection.query("SELECT * from appoints  ;", function (error, results, fields) {
+    if (error) throw error;
+    res.status(200)
+      .json({
+        status: 'success',
+        data: results,
+        message: 'Retrieved ALL appoints'
+      });
+  });
+}
+
+//Delete
+
+function deletequeue(req, res) {
+  console.log(req.param.id);
+  connection.query(`DELETE FROM book where BookID = ${req.params.id}`, function (error, results, fields) {
+    if (error) throw error;
+    res.status(200)
+      .json({
+        status: 'success',
+        data: results,
+        message: 'Retrieved ALL bookqueue :'+req.params.id
+      });
+  });
+}
 
 
 
-
-// function gettype(req, res) {
-//   console.log(req.param.id);
-//   connection.query(`SELECT * from type`, function (error, results, fields) {
-//     if (error) throw error;
-//     res.status(200)
-//       .json({
-//         status: 'success',
-//         data: results,
-//         message: 'Retrieved ALL type'
-//       });
-//   });
-// }
-
-// function gethistoryiiByID(req, res) {
-//   console.log(req.param.id);
-//   connection.query(`SELECT * from historyii where AID = ${req.params.id}`, function (error, results, fields) {
-//     if (error) throw error;
-//     res.status(200)
-//       .json({
-//         status: 'success',
-//         data: results,
-//         message: 'Retrieved ALL history  AID :'+req.params.id
-//       });
-//   });
-// }
-
-
-
-// function getbookqueue(req, res) {
-//   console.log(req.param.id);
-//   connection.query(`SELECT * from booking`, function (error, results, fields) {
-//     if (error) throw error;
-//     res.status(200)
-//       .json({
-//         status: 'success',
-//         data: results,
-//         message: 'Retrieved ALL booking'
-//       });
-//   });
-// }
-
-// function getappointment(req, res) {
-//   console.log(req.param.id);
-//   connection.query(`SELECT * from appointment`, function (error, results, fields) {
-//     if (error) throw error;
-//     res.status(200)
-//       .json({
-//         status: 'success',
-//         data: results,
-//         message: 'Retrieved ALL appointment'
-//       });
-//   });
-// }
-// function getbookqueueByID(req, res) {
-//   console.log(req.param.id);
-//   connection.query(`SELECT * from history where HistoryID = ${req.params.id}`, function (error, results, fields) {
-//     if (error) throw error;
-//     res.status(200)
-//       .json({
-//         status: 'success',
-//         data: results,
-//         message: 'Retrieved ALL history  HistoryID :'+req.params.id
-//       });
-//   });
-// }
 
 
 
