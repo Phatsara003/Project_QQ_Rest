@@ -28,7 +28,7 @@ app.get('/customer',db.getAllData);
 app.get('/book',db.getbookqueue);
 app.get('/appoints',db.getappoints);
 app.get('/customer/:id',db.getAllDataByID);
-app.get('/bookq/:id',db.getbookqueueByID);
+app.get('/book/:id',db.getbookqueueByID);
 app.get('/history',db.gethistory);
 //post
 app.post('/book',db.insertbookq);
