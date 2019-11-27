@@ -5,6 +5,9 @@ var connection = mysql.createConnection({
   user: 'root',
   password: '',
   database: 'tienden1'
+  
+
+   
 });
 var db = connection.query;
 connection.connect(function (err) {
@@ -22,6 +25,7 @@ module.exports = {
   insertdate,
   inserttime,
   deletequeue,
+  updatebook
   // gethistoryiiByID,
   // getbookqueue,
   // getappoins,
@@ -92,7 +96,7 @@ console.log(req.query);
 res.send();
 
   //Insert a record in the "customers" table:
-  var sql = "INSERT INTO book  VALUES ("+req.query.BookID+",'"+req.query.start+"','"+req.query.Time+"','"+req.query.Detail+"',"+req.query.Status+",'"+req.query.Type+"','"+req.query.end+"',"+req.query.CusID+")";
+  var sql = "INSERT INTO book  VALUES ("+req.query.BookID+",'"+req.query.start+"','"+req.query.Time+"','"+req.query.Detail+"',"+req.query.Status+",'"+req.query.Type+"','"+req.query.end+"','"+req.query.alert+"','"+req.query.situation+"','"+req.query.dayofweek+"',"+req.query.CusID+")";
   connection.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
@@ -175,6 +179,24 @@ function deletequeue(req, res) {
       });
   });
 }
+
+function updatebook(req, res) {
+  console.log(res);
+    
+    console.log(req.query);
+       
+    res.send();
+    
+      
+      var sql = "UPDATE book SET situation = '1' WHERE BookID = '+req.query.situation+'";
+      connection.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted");
+      });
+    
+    }
+
+
 
 
 

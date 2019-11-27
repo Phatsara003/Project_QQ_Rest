@@ -36,6 +36,8 @@ app.post('/date',db.insertdate);
 app.post('/time',db.inserttime);
 //delete
 app.delete('/book/:id', db.deletequeue);
+//update
+app.put('/book/id',db.updatebook);
 
 
    
@@ -43,5 +45,5 @@ app.delete('/book/:id', db.deletequeue);
 
 var port = process.env.PORT || 8080;
 app.listen(port, function () {
-    console.log('App is running on http://172.19.131.212:' + port);
+    console.log('App is running on http://172.26.252.97:' + port);
 });
