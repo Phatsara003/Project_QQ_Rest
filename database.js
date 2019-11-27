@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 var Handshake = require('handshake');
 var connection = mysql.createConnection({
-  host: '127.0.0.1',
+  host: '52.184.32.252',
   user: 'root',
-  password: '',
-  database: 'tienden1'
+  password: 'test',
+  database: 'tienden'
   
 
    
